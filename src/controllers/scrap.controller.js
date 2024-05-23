@@ -1,15 +1,15 @@
-import { first5Duck, scrapFromDuck } from "../helpers/scraping.js";
+import { first5Duck, first5Google, scrapFromDuck } from "../helpers/scraping.js";
+import { booleanNumber } from "../helpers/utils.js";
 
 
 export async function getImages(req, res) {
   try {
     const { name } = req.query;
-    const urlList = await first5Duck(name, 5)
-    console.log(urlList);
+    const urlList = await first5Duck(name)
     res.json(urlList);
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: error });
+    return res.status(500).json([]);
   }
 }
 // export async function createTask(req, res) {

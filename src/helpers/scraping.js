@@ -51,7 +51,7 @@ export const first5Google = async (name) => {
     const search = `https://www.google.com/search?q=${name}&udm=2`
     await page.goto(search)
     const list = await page.evaluate(async () => {
-        await new Promise((r) => setTimeout(r, 1000));
+        // await new Promise((r) => setTimeout(r, 1000));
         const listUrls = []
         const container = document.querySelector('div[role="main"]')
         const listImages = container.querySelectorAll('img')
@@ -60,11 +60,11 @@ export const first5Google = async (name) => {
                 continue
             }
             listImages[i].click()
-            await new Promise((r) => setTimeout(r, 2000));
+            // await new Promise((r) => setTimeout(r, 2000));
             const buttonCamara = document.querySelector('button[aria-label="Buscar en la imagen"]') || document.querySelector('button[aria-label="Buscar dentro de la imagen"]');
-            await new Promise((r) => setTimeout(r, 2000));
+            // await new Promise((r) => setTimeout(r, 2000));
             const containerImg = buttonCamara.parentNode.parentNode.parentNode.parentNode
-            await new Promise((r) => setTimeout(r, 1000));
+            // await new Promise((r) => setTimeout(r, 1000));
             const images = containerImg.querySelectorAll('img')
             const img = images[images.length - 1];
             listUrls.push(img?.src)
