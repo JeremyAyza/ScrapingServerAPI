@@ -3,9 +3,9 @@ import { scrapFromDuck } from "../helpers/scraping.js";
 
 export async function getImages(req, res) {
   try {
-    const { name } = req.params;
+    const { name } = req.query;
     const url = await scrapFromDuck(name)
-    res.json({ url });
+    res.json([url, url, url, url, url]);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: error });
