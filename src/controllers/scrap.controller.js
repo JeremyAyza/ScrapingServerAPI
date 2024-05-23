@@ -1,11 +1,12 @@
-import { scrapFromDuck } from "../helpers/scraping.js";
+import { first5Duck, scrapFromDuck } from "../helpers/scraping.js";
 
 
 export async function getImages(req, res) {
   try {
     const { name } = req.query;
-    const url = await scrapFromDuck(name)
-    res.json([url, url, url, url, url]);
+    const urlList = await first5Duck(name, 5)
+    console.log(urlList);
+    res.json(urlList);
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: error });
