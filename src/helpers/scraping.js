@@ -1,12 +1,14 @@
-import page from "../page.js";
+import browser from "../browser.js";
 export const scrapFromDuck = async (name) => {
     const search = `https://duckduckgo.com/?q=${name}&iax=images&ia=images`
+    const page = await browser.newPage()
     await page.goto(search)
     const url = await page.evaluate(async () => {
         await new Promise((r) => setTimeout(r, 1000));
         const container = document.querySelector('.tile-wrap')
         return container.getElementsByTagName('img')[0]?.src
     })
+    page.close()
     return url
 }
 export const scrapFromGoogle = async (name) => {
@@ -27,12 +29,14 @@ export const scrapFromGoogle = async (name) => {
         console.log('URL', img?.src);
         return img?.src
     })
+    page.close()
     return url
 }
 
 
 export const first5Duck = async (name) => {
     const search = `https://duckduckgo.com/?q=${name}&iax=images&ia=images`
+    const page = await browser.newPage()
     await page.goto(search)
     const urlList = await page.evaluate(async () => {
         await new Promise((r) => setTimeout(r, 1000));
@@ -41,14 +45,23 @@ export const first5Duck = async (name) => {
         const list = [];
         // Iterar sobre las primeras 5 imágenes o menos si hay menos de 5
         for (let i = 0; i < Math.min(images.length, 6); i++) {
-            list.push(images[i].src);
+            const img = images[i];
+            console.log({ img });
+            img.click();
+            const main = document.querySelector('.detail__media__img-wrapper');
+            console.log({ main });
+            const url = main.getElementsByTagName('a')[0].href
+            console.log(url);
+            list.push(url);
         }
         return list
     })
+    // page.close()
     return urlList
 }
 export const first5Google = async (name) => {
     const search = `https://www.google.com/search?q=${name}&udm=2`
+    const page = await browser.newPage()
     await page.goto(search)
     const list = await page.evaluate(async () => {
         // await new Promise((r) => setTimeout(r, 1000));
@@ -71,5 +84,6 @@ export const first5Google = async (name) => {
         }
         return listUrls
     })
+    page.close()
     return list
 }
