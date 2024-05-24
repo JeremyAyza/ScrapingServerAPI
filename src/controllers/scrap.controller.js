@@ -1,5 +1,5 @@
 import { first5Duck, first5Google, scrapFromDuck } from "../helpers/scraping.js";
-import { booleanNumber } from "../helpers/utils.js";
+
 
 
 export async function getImages(req, res) {

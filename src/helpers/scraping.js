@@ -1,4 +1,4 @@
-import browser from "../browser.js";
+import { newBrowser } from "../browser.js";
 export const scrapFromDuck = async (name) => {
     const search = `https://duckduckgo.com/?q=${name}&iax=images&ia=images`
     const page = await browser.newPage()
@@ -35,6 +35,7 @@ export const scrapFromGoogle = async (name) => {
 
 
 export const first5Duck = async (name) => {
+    const browser = await newBrowser()
     const search = `https://duckduckgo.com/?q=${name}&iax=images&ia=images`
     const page = await browser.newPage()
     await page.goto(search)
@@ -56,7 +57,8 @@ export const first5Duck = async (name) => {
         }
         return list
     })
-    // page.close()
+    page.close()
+    browser.close()
     return urlList
 }
 export const first5Google = async (name) => {
