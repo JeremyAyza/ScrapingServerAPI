@@ -10,6 +10,7 @@ import scrapRoutes from "./routes/scrap.routes.js";
 // Middlewares
 app.use(morgan("dev"));
 app.use(express.json());
+app.use(cors());
 
 // Routes
 app.use("/api/scrap", scrapRoutes);
