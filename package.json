@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "nodemon index.js",
     "start": "node index.js",
-    "pre": "node node_modules/puppeteer/install.js",
+    "pre": "node ./node_modules/puppeteer/install.mjs",
     "postinstall": "npx puppeteer install"
   },
   "keywords": [],
