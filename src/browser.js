@@ -11,4 +11,3 @@ const options = {
 export const newBrowser = async () => {
     return await puppeteer.launch(options)
 }
-export default browser

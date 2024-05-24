@@ -5,15 +5,23 @@ const app = express();
 
 // Import routes
 import scrapRoutes from "./routes/scrap.routes.js";
+import proxyRoutes from "./routes/proxy.routes.js";
+
+
 
 
 // Middlewares
 app.use(morgan("dev"));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use(cors());
 
 // Routes
-app.use("/api/scrap", scrapRoutes);
+app.use("/scrap", scrapRoutes);
+
+app.use('/proxy', proxyRoutes);
+
 
 
 export default app;
