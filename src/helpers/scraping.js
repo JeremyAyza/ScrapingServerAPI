@@ -40,7 +40,7 @@ export const first5Duck = async (name) => {
         const images = container.getElementsByTagName('img')
         const list = [];
         // Iterar sobre las primeras 5 imágenes o menos si hay menos de 5
-        for (let i = 0; i < Math.min(images.length, 5); i++) {
+        for (let i = 0; i < Math.min(images.length, 6); i++) {
             list.push(images[i].src);
         }
         return list
@@ -55,7 +55,7 @@ export const first5Google = async (name) => {
         const listUrls = []
         const container = document.querySelector('div[role="main"]')
         const listImages = container.querySelectorAll('img')
-        for (let i = 0; i < Math.min(listImages.length, 10); i++) {
+        for (let i = 0; i < Math.min(listImages.length, 12); i++) {
             if (i % 2 === 1 && i) {
                 continue
             }
