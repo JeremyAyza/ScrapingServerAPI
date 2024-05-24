@@ -46,14 +46,14 @@ export const first5Duck = async (name) => {
         const list = [];
         // Iterar sobre las primeras 5 imágenes o menos si hay menos de 5
         for (let i = 0; i < Math.min(images.length, 6); i++) {
-            const img = images[i];
-            console.log({ img });
-            img.click();
-            const main = document.querySelector('.detail__media__img-wrapper');
-            console.log({ main });
-            const url = main.getElementsByTagName('a')[0].href
-            console.log(url);
-            list.push(url);
+            // const img = images[i];
+            // console.log({ img });
+            // img.click();
+            // const main = document.querySelector('.detail__media__img-wrapper');
+            // console.log({ main });
+            // const url = main.getElementsByTagName('a')[0].href
+            // console.log(url);
+            list.push(images[i].src);
         }
         return list
     })
