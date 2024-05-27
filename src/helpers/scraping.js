@@ -1,18 +1,28 @@
 import { newBrowser } from "../browser.js";
+
+const headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+};
 export const scrapFromDuck = async (name) => {
     const search = `https://duckduckgo.com/?q=${name}&iax=images&ia=images`
+    const browser = await newBrowser()
     const page = await browser.newPage()
+    await page.setExtraHTTPHeaders(headers);
     await page.goto(search)
     const url = await page.evaluate(async () => {
         await new Promise((r) => setTimeout(r, 1000));
         const container = document.querySelector('.tile-wrap')
         return container.getElementsByTagName('img')[0]?.src
     })
-    page.close()
+    await page.close()
+    await browser.close()
     return url
 }
 export const scrapFromGoogle = async (name) => {
+    const browser = await newBrowser()
+    const page = await browser.newPage()
     const search = `https://www.google.com/search?q=${name}&udm=2`
+    await page.setExtraHTTPHeaders(headers);
     await page.goto(search)
     const url = await page.evaluate(async () => {
         await new Promise((r) => setTimeout(r, 1000));
@@ -26,10 +36,10 @@ export const scrapFromGoogle = async (name) => {
 
         const images = containerImg.querySelectorAll('img')
         const img = images[images.length - 1];
-        console.log('URL', img?.src);
         return img?.src
     })
-    page.close()
+    await page.close()
+    await browser.close()
     return url
 }
 
@@ -38,6 +48,7 @@ export const first5Duck = async (name) => {
     const browser = await newBrowser()
     const search = `https://duckduckgo.com/?q=${name}&iax=images&ia=images`
     const page = await browser.newPage()
+    await page.setExtraHTTPHeaders(headers);
     await page.goto(search)
     const urlList = await page.evaluate(async () => {
         await new Promise((r) => setTimeout(r, 1000));
@@ -57,13 +68,15 @@ export const first5Duck = async (name) => {
         }
         return list
     })
-    page.close()
-    browser.close()
+    await page.close()
+    await browser.close()
     return urlList
 }
 export const first5Google = async (name) => {
     const search = `https://www.google.com/search?q=${name}&udm=2`
+    const browser = await newBrowser()
     const page = await browser.newPage()
+    await page.setExtraHTTPHeaders(headers);
     await page.goto(search)
     const list = await page.evaluate(async () => {
         // await new Promise((r) => setTimeout(r, 1000));
@@ -86,7 +99,8 @@ export const first5Google = async (name) => {
         }
         return listUrls
     })
-    page.close()
+    await page.close()
+    await browser.close()
     return list
 }
 
@@ -94,6 +108,11 @@ export const first5Google = async (name) => {
 export const scrapListFromDuck = async (list) => {
     const browser = await newBrowser()
     const page = await browser.newPage()
+    await page.setExtraHTTPHeaders({
+        'Access-Control-Allow-Origin': '*',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+        'Accept': '*/*',
+    });
     const listUrls = []
     for (let index = 0; index < list.length; index++) {
         const name = list[index]
@@ -112,8 +131,8 @@ export const scrapListFromDuck = async (list) => {
         })
         listUrls.push(urlList)
     }
-    page.close()
-    browser.close()
+    await page.close()
+    await browser.close()
     return listUrls
 
 }

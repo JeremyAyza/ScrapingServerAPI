@@ -25,7 +25,6 @@ export const proxyRequest = async (req, res) => {
     });
     res.status(response.status).send(response.data);
   } catch (error) {
-    console.log(error);
     res.status(error.response ? error.response.status : 500).send(error.message);
   }
 };
