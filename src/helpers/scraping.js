@@ -89,3 +89,31 @@ export const first5Google = async (name) => {
     page.close()
     return list
 }
+
+
+export const scrapListFromDuck = async (list) => {
+    const browser = await newBrowser()
+    const page = await browser.newPage()
+    const listUrls = []
+    for (let index = 0; index < list.length; index++) {
+        const name = list[index]
+        const search = `https://duckduckgo.com/?q=${name}&iax=images&ia=images`
+        await page.goto(search)
+        const urlList = await page.evaluate(async () => {
+            await new Promise((r) => setTimeout(r, 1000));
+            const container = document.querySelector('.tile-wrap')
+            const images = container.getElementsByTagName('img')
+            const listItem = [];
+            // Iterar sobre las primeras 5 imágenes o menos si hay menos de 5
+            for (let i = 0; i < Math.min(images.length, 6); i++) {
+                listItem.push(images[i].src);
+            }
+            return listItem
+        })
+        listUrls.push(urlList)
+    }
+    page.close()
+    browser.close()
+    return listUrls
+
+}

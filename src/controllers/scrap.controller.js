@@ -1,4 +1,4 @@
-import { first5Duck, first5Google, scrapFromDuck } from "../helpers/scraping.js";
+import { first5Duck, first5Google, scrapFromDuck, scrapListFromDuck } from "../helpers/scraping.js";
 
 
 
@@ -9,6 +9,21 @@ export async function getImages(req, res) {
     res.json(urlList);
   } catch (error) {
     console.log(error);
+    return res.status(500).json([]);
+  }
+}
+
+
+export async function getImagesForList(req, res) {
+  try {
+    const listSearch = req.body;
+    if (!listSearch?.length) {
+      res.json([])
+    }
+    const list = await scrapListFromDuck(listSearch)
+    res.json(list);
+  } catch (error) {
+    console.error(error);
     return res.status(500).json([]);
   }
 }
